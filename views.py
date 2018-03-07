@@ -1,12 +1,13 @@
 import json
 from util import *
+from copy import deepcopy
 from __init__ import app
 from flask import render_template
 from flask import request
 
-current_id = 0
-users = {}
-message_queue = []
+chat_id = 0
+users_online = []
+users_message = {}
 
 
 @app.route("/")
@@ -18,21 +19,20 @@ def index():
 def login():
     if request.method == "POST":
         data_in = request.form.to_dict()
-        users[data_in["name"]] = current_id - 1
+        user = data_in["name"]
+        users_online.append(user)
+        users_message[user] = []
         data_out = data_in.copy()
         return json.dumps(data_out)
 
 
 @app.route("/receiver", methods=["POST"])
 def receive():
-    global current_id
     if request.method == "POST":
         new_message = request.form.to_dict()
+        user = new_message["name"]
         new_message["time"] = timef()
-        new_message["id"] = current_id
-        current_id += 1
-        message_queue.append(new_message)
-        print(message_queue)
+        users_message[user].append(new_message)
         return "Success"
 
 
@@ -41,12 +41,8 @@ def send():
     if request.method == "POST":
         user = request.form.to_dict()["name"]
         data_out = {}
-        message_list = []
-        for msg in message_queue:
-            if msg["id"] > users[user]:
-                message_list.append(msg)
-                users[user] += 1
-        data_out["message"] = message_list
+        data_out["message"] = deepcopy(users_message[user])
+        users_message[user] = []
         return json.dumps(data_out)
 
 
