@@ -32,7 +32,8 @@ def receive():
         new_message = request.form.to_dict()
         user = new_message["name"]
         new_message["time"] = timef()
-        users_message[user].append(new_message)
+        for u in users_message.keys():
+            users_message[u].append(new_message)
         return "Success"
 
 
