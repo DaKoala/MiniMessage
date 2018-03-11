@@ -22,7 +22,10 @@ def login():
         user = data_in["name"]
         users_online.append(user)
         users_message[user] = []
-        data_out = data_in.copy()
+        data_out = {"name": user, "online": [user]}
+        for other in users_online:
+            if other != user:
+                data_out["online"].append(other)
         return json.dumps(data_out)
 
 
