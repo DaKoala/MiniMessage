@@ -11,6 +11,7 @@ $(document).ready(() => {
         let onlineUsers = data["online"];
         for (let i = 0; i < onlineUsers.length; i++) {
             let temp = $("<li></li>");
+            temp.attr("id", onlineUsers[i]);
             temp.text(onlineUsers[i]);
             $("#onlineUsers").append(temp);
         }
@@ -30,14 +31,24 @@ $(document).ready(() => {
 
     /* Get message */
     setInterval("polling()", 3000);
+
+    /* Quit */
+    $(window).unload(() => {
+        $.post("/quit", {name: me.name}, () => {
+
+        });
+    });
 });
 
 
 function polling() {
     $.post("/sender", {name: me.name}, (data) => {
-        let messages = JSON.parse(data).message;
-        for (let i = 0; i < messages.length; i++) {
-            let curr = messages[i];
+        console.log(data);
+        data = JSON.parse(data);
+
+        /* Handle new messages */
+        for (let i = 0; i < data.message.length; i++) {
+            let curr = data.message[i];
             let newMsg = $("<div></div>");
             let temp = $("<p></p>");
             temp.html("<p>" + curr.name + " " + "<small>" + curr.time + "</small></p>");
@@ -46,6 +57,14 @@ function polling() {
             temp.html(curr.message);
             newMsg.append(temp);
             $("#display").append(newMsg);
+        }
+
+        /* Handle user quit */
+        if (data.quit !== undefined) {
+            console.log("quit");
+            for (let i = 0; i < data.quit.length; i++) {
+                $("#" + data.quit[i]).remove();
+            }
         }
     });
 }
