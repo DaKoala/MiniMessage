@@ -1,20 +1,20 @@
 let me = {};
 let interval;
 
+/* Input name before the page load */
+$(window).on("load", () => {
+    me.name = prompt("Please enter your name:", "");
+    Object.freeze(me);
+});
+
 $(document).ready(() => {
     /* Login */
-    let name = prompt("Please enter your name:", "");
-    me.name = name;
-    me = Object.freeze(me);
-    $.post("/login", {name: name}, (data) => {
+    $.post("/login", {name: me.name}, (data) => {
         data = JSON.parse(data);
         $("#greeting").text("Welcome, " + data["name"]);
         let onlineUsers = data["online"];
         for (let i = 0; i < onlineUsers.length; i++) {
-            let temp = $("<li></li>");
-            temp.attr("id", onlineUsers[i]);
-            temp.text(onlineUsers[i]);
-            $("#onlineUsers").append(temp);
+            newUser(onlineUsers[i]);
         }
     });
 
@@ -34,11 +34,16 @@ $(document).ready(() => {
     interval = setInterval("polling()", 3000);
 
     /* Quit */
-    $(window).unload(() => {
+    $(window).on("unload", () => {
         $.post("/quit", {name: me.name}, () => {
 
         });
     });
+});
+
+/* Handle error */
+$(document).ajaxError(() => {
+    interval = clearInterval(interval);
 });
 
 
@@ -60,6 +65,13 @@ function polling() {
             $("#display").append(newMsg);
         }
 
+        /* Handle user arrival */
+        if (data.arrive !== undefined) {
+            for (let i = 0; i < data.arrive.length; i++) {
+                newUser(data.arrive[i]);
+            }
+        }
+
         /* Handle user quit */
         if (data.quit !== undefined) {
             console.log("quit");
@@ -67,10 +79,12 @@ function polling() {
                 $("#" + data.quit[i]).remove();
             }
         }
-    })
-        .error(() => {
-            interval = clearInterval(interval);
-        })
+    });
 }
 
-
+function newUser(name) {
+    let temp = $("<li></li>");
+    temp.attr("id", name);
+    temp.text(name);
+    $("#onlineUsers").append(temp);
+}

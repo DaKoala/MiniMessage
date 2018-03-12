@@ -28,6 +28,8 @@ def login():
         for other in users_online:
             if other != user:
                 data_out["online"].append(other)
+                users_addtion[other]["arrive"] = users_addtion[other].get("arrive", [])
+                users_addtion[other]["arrive"].append(user)
         return json.dumps(data_out)
 
 
