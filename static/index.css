@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* header */
+#header {
+    background-color: #4472CA;
+}
+
+#header span {
+    color: white;
+}
