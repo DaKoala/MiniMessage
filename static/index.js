@@ -1,4 +1,5 @@
 let me = {};
+let interval;
 
 $(document).ready(() => {
     /* Login */
@@ -30,7 +31,7 @@ $(document).ready(() => {
     });
 
     /* Get message */
-    setInterval("polling()", 3000);
+    interval = setInterval("polling()", 3000);
 
     /* Quit */
     $(window).unload(() => {
@@ -66,7 +67,10 @@ function polling() {
                 $("#" + data.quit[i]).remove();
             }
         }
-    });
+    })
+        .error(() => {
+            interval = clearInterval(interval);
+        })
 }
 
 
