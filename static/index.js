@@ -19,7 +19,13 @@ $(document).ready(() => {
         sendMessage();
     });
     $("#msgInput").bind("keypress", (event) => {
-       if (event.keyCode === 13) sendMessage();
+       if (event.keyCode === 13 && event.ctrlKey) {
+           $("#msgInput").val($("#msgInput").val() + "\n");
+       }
+       else if (event.keyCode === 13) {
+          event.preventDefault();
+          sendMessage();
+       }
     });
 
     /* Get message */
