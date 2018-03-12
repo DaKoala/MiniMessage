@@ -6,8 +6,107 @@ body {
 /* header */
 #header {
     background-color: #4472CA;
+    box-shadow: 0 3px 3px #888;
+    margin-bottom: 2rem;
 }
 
 #header span {
     color: white;
+}
+
+#header #greeting {
+    color: white;
+}
+
+#header #greeting:hover {
+    color: white;
+}
+
+/* user list */
+#online {
+    padding: 0;
+    height: 45rem;
+    border: 0.25rem solid #5E7CE2;
+}
+
+#online #title {
+    color: white;
+    margin: 0;
+    width: 100%;
+    padding: 1rem 0.2rem;
+    background-color: #5E7CE2;
+}
+
+#onlineUsers li {
+    border: none;
+    border-radius: 0;
+}
+
+#onlineUsers li:hover {
+    border: none;
+    border-radius: 0;
+}
+
+#onlineUsers i {
+    color: #00c800;
+}
+
+/* chat */
+#chat {
+    padding: 0;
+    height: 45rem;
+    border: 0.25rem solid #5E7CE2;
+    border-left: 0;
+}
+
+#display {
+    padding: 1rem;
+    height: 35rem;
+    border-bottom: 0.25rem solid #5E7CE2;
+}
+
+#display span {
+    font-size: 1rem;
+}
+
+#display small {
+    color: #969696;
+    font-size: 0.5rem;
+}
+
+#display .message {
+    margin-bottom: 1em;
+}
+
+#display .pop {
+    background-color: #7099f4;
+    color: white;
+    border: none;
+    border-radius: 0.2rem;
+    padding: 0.3rem 1rem;
+    display: inline-block;
+}
+
+#inputArea {
+    height: 10rem;
+}
+
+#msgInput {
+    height: 9.5rem;
+    width: 100%;
+    resize: none;
+    padding: 0.8rem;
+    border: none;
+    outline: none;
+}
+
+#msgSubmit {
+    font-size: 2rem;
+    color: white;
+    outline: none;
+    height: 6rem;
+    border-radius: 0.3em;
+    width: 80%;
+    border: none;
+    background-color: #00e352;
 }

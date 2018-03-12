@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{ url_for("static", filename="index.css") }}">
+    <link rel="stylesheet" href="//code.z01.com/v4/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.z01.com/boot/dist/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
@@ -13,6 +14,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for("static", filename="index.css") }}">
     <script src="{{ url_for("static", filename="index.js") }}"></script>
     <meta charset="UTF-8">
     <title>Homepage</title>
@@ -20,19 +22,36 @@
 <body>
 
 <nav class="navbar navbar-expand-sm" id="header">
-    <span class="navbar-brand ml-2 h1">MiniMessage</span>
+    <span class="navbar-brand ml-5 my-auto">MiniMessage</span>
+    <div class="collapse navbar-collapse">
+        <a class="nav-link ml-auto" href="#" id="greeting"><i class="fa fa-user-circle" aria-hidden="true"></i></a>
+    </div>
 </nav>
 
-<h1 id="greeting"></h1>
-<div id="display"></div>
-<div id="inputArea">
-    <textarea id="msgInput" name="message"></textarea>
-    <input id="msgSubmit" type="button" value="Submit"/>
+<div class="container my-auto">
+    <div class="row">
+        <div class="col-sm-3" id="online">
+            <p class="text-center h4" id="title">Online Users</p>
+            <ul class="list-group" id="onlineUsers">
+            </ul>
+        </div>
+        <div class="col-sm-9" id="chat">
+            <div id="display">
+
+            </div>
+            <div id="inputArea">
+                <div class="row">
+                    <div class="col-sm-10" style="padding-right:0;">
+                        <textarea class="" id="msgInput"></textarea>
+                    </div>
+                    <div class="col-sm-2" style="padding:0; padding-top: 1.2rem;">
+                        <button class="align-middle" id="msgSubmit">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <h3>Online Users</h3>
-    <ul id="onlineUsers">
-    </ul>
-</div>
+
 </body>
 </html>

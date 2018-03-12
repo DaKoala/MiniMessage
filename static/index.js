@@ -1,17 +1,13 @@
 let me = {};
 let interval;
 
-/* Input name before the page load */
-$(window).on("load", () => {
-    me.name = prompt("Please enter your name:", "");
-    Object.freeze(me);
-});
-
 $(document).ready(() => {
     /* Login */
+    me.name = prompt("Please enter your name:", "");
+    Object.freeze(me);
     $.post("/login", {name: me.name}, (data) => {
         data = JSON.parse(data);
-        $("#greeting").text("Welcome, " + data["name"]);
+        $("#greeting").html($("#greeting").html() + " " + data["name"]);
         let onlineUsers = data["online"];
         for (let i = 0; i < onlineUsers.length; i++) {
             newUser(onlineUsers[i]);
@@ -20,14 +16,10 @@ $(document).ready(() => {
 
     /* Submit message */
     $("#msgSubmit").click(() => {
-        let dataOut = {
-            name: me.name,
-            message: $("#msgInput").val()
-        };
-        $("#msgInput").val("");
-        $.post("/receiver", dataOut, (data) => {
-            polling();
-        });
+        sendMessage();
+    });
+    $("#msgInput").bind("keypress", (event) => {
+       if (event.keyCode === 13) sendMessage();
     });
 
     /* Get message */
@@ -55,11 +47,11 @@ function polling() {
         /* Handle new messages */
         for (let i = 0; i < data.message.length; i++) {
             let curr = data.message[i];
-            let newMsg = $("<div></div>");
+            let newMsg = $("<div class='message'></div>");
             let temp = $("<p></p>");
-            temp.html("<p>" + curr.name + " " + "<small>" + curr.time + "</small></p>");
+            temp.html('<span class="badge badge-secondary">' + curr.name + "</span>" + "<small>" + " " + curr.time + "</small>");
             newMsg.append(temp);
-            temp = $("<p></p>");
+            temp = $('<div class="pop mr-auto"></div>');
             temp.html(curr.message);
             newMsg.append(temp);
             $("#display").append(newMsg);
@@ -85,6 +77,19 @@ function polling() {
 function newUser(name) {
     let temp = $("<li></li>");
     temp.attr("id", name);
-    temp.text(name);
+    temp.attr("class", "list-group-item");
+    temp.html('<i class="fa fa-check-square" aria-hidden="true"></i>' + " " + name);
     $("#onlineUsers").append(temp);
+}
+
+function sendMessage() {
+    if ($("#msgInput").val() === "") return;
+    let dataOut = {
+        name: me.name,
+        message: $("#msgInput").val()
+    };
+    $("#msgInput").val("");
+    $.post("/receiver", dataOut, (data) => {
+        polling();
+    });
 }
