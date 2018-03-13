@@ -19,13 +19,13 @@ $(document).ready(() => {
         sendMessage();
     });
     $("#msgInput").bind("keypress", (event) => {
-       if (event.keyCode === 13 && event.ctrlKey) {
-           $("#msgInput").val($("#msgInput").val() + "\n");
-       }
-       else if (event.keyCode === 13) {
-          event.preventDefault();
-          sendMessage();
-       }
+        if (event.keyCode === 13 && event.ctrlKey) {
+            $("#msgInput").val($("#msgInput").val() + "\n");
+        }
+        else if (event.keyCode === 13) {
+            event.preventDefault();
+            sendMessage();
+        }
     });
 
     /* Get message */
@@ -62,6 +62,8 @@ function polling() {
             newMsg.append(temp);
             $("#display").append(newMsg);
         }
+        $("#display").scrollTop($("#display")[0].scrollHeight);
+
 
         /* Handle user arrival */
         if (data.arrive !== undefined) {
