@@ -54,6 +54,10 @@ function polling() {
         for (let i = 0; i < data.message.length; i++) {
             let curr = data.message[i];
             let newMsg = $("<div class='message'></div>");
+            if (curr.name === me.name) {
+                newMsg.addClass("me");
+                curr.name = "Me";
+            }
             let temp = $("<p></p>");
             temp.html('<span class="badge badge-secondary">' + curr.name + "</span>" + "<small>" + " " + curr.time + "</small>");
             newMsg.append(temp);

@@ -79,6 +79,14 @@ body {
     margin-bottom: 1em;
 }
 
+#display .message.me {
+    text-align: right;
+}
+
+.me span {
+    background-color: #c7c7c7;
+}
+
 #display .pop {
     background-color: #7099f4;
     color: white;
@@ -86,6 +94,10 @@ body {
     border-radius: 0.2rem;
     padding: 0.3rem 1rem;
     display: inline-block;
+}
+
+#display .me .pop {
+    background-color: #07cd3a;
 }
 
 #inputArea {
