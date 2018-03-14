@@ -1,5 +1,6 @@
 # MiniMessage
 A web chat room application. Developed with Flask framework, jQuery 3 and Bootstrap 4.
+
 一个在线网页聊天室，使用 Flask 框架、jQuery 3 和 Bootstrap 4 开发。
 
 Visit [mime.billyzou.com](http://mime.billyzou.com/) to try it! (Not avaiable currently)
@@ -8,7 +9,9 @@ Visit [mime.billyzou.com](http://mime.billyzou.com/) to try it! (Not avaiable cu
 
 ## Login 登录
 ![login](./screenshots/enter.png)
+
 Enter your user name when you open the webpage.
+
 当你打开页面时，输入用户名。
 
 ## Chat 聊天
