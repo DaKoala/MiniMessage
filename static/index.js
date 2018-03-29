@@ -1,5 +1,7 @@
 let me = {};
 let interval;
+let active = "#lobbyContent";
+
 
 $(document).ready(() => {
     /* Login */
@@ -37,6 +39,16 @@ $(document).ready(() => {
 
         });
     });
+
+    /* Tab */
+    $("#tab a").click((e) => {
+        let thisId = e.target.id;
+        active = "#" + thisId + "Content";
+        $("#tab a").removeClass("active");
+        $("#" + thisId).addClass("active");
+        $(".tab-content").hide();
+        $(active).show();
+    });
 });
 
 /* Handle error */
@@ -64,9 +76,9 @@ function polling() {
             temp = $('<div class="pop mr-auto"></div>');
             temp.html(curr.message);
             newMsg.append(temp);
-            $("#display").append(newMsg);
+            $(active).append(newMsg);
+            $("#display").scrollTop($("#display")[0].scrollHeight);
         }
-        $("#display").scrollTop($("#display")[0].scrollHeight);
 
 
         /* Handle user arrival */

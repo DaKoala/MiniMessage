@@ -59,6 +59,44 @@ body {
     border-left: 0;
 }
 
+#tab {
+    border-bottom: 0.25rem solid #5E7CE2;
+    padding: 0.1rem 0.2rem;
+}
+
+#tab .nav {
+}
+
+#tab #add {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+    border-radius: 100%;
+    color: white;
+    background-color: #07cd3a;
+    border: none;
+}
+
+#tab #add:hover {
+    cursor: pointer;
+}
+
+#tab .nav-link.active{
+    color: white;
+    background-color: #92B4F4;;
+}
+
+#tab .nav-link {
+    display: inline-block;
+    color: #92B4F4;
+    border: 0.05rem solid #92B4F4;
+    margin-left: 0.5rem;
+}
+
+#tab .nav-link:hover {
+    cursor: pointer;
+}
+
 #display {
     padding: 1rem;
     height: 35rem;
