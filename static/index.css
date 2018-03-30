@@ -1,4 +1,5 @@
 body {
+    background-color: #e2f1fa;
     margin: 0;
     padding: 0;
 }
@@ -38,6 +39,7 @@ body {
 }
 
 #onlineUsers li {
+    background-color: transparent;
     border: none;
     border-radius: 0;
 }
@@ -73,11 +75,13 @@ body {
     font-size: 1.5rem;
     border-radius: 100%;
     color: white;
-    background-color: #07cd3a;
+    background-color: #00e352;
     border: none;
 }
 
 #tab #add:hover {
+    transition: 0.2s;
+    background-color: #07cd3a;
     cursor: pointer;
 }
 
@@ -99,7 +103,7 @@ body {
 
 #display {
     padding: 1rem;
-    height: 35rem;
+    height: 33rem;
     border-bottom: 0.25rem solid #5E7CE2;
     overflow: auto;
 }
@@ -143,7 +147,8 @@ body {
 }
 
 #msgInput {
-    height: 9.5rem;
+    background-color: transparent;
+    height: 8rem;
     width: 100%;
     resize: none;
     padding: 0.8rem;
@@ -160,4 +165,10 @@ body {
     width: 80%;
     border: none;
     background-color: #00e352;
+}
+
+#msgSubmit:hover {
+    transition: 0.2s;
+    cursor: pointer;
+    background-color: #07cd3a;
 }

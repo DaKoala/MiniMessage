@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="//code.z01.com/boot/dist/css/font-awesome.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for("static", filename="index.css") }}">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for("static", filename="index.css") }}">
     <script src="{{ url_for("static", filename="index.js") }}"></script>
     <meta charset="UTF-8">
     <title>Homepage</title>
 </head>
 <body>
 
+<!-- Nav bar -->
 <nav class="navbar navbar-expand-sm" id="header">
     <span class="navbar-brand ml-5 my-auto">MiniMessage</span>
     <div class="collapse navbar-collapse">
@@ -29,6 +28,7 @@
     </div>
 </nav>
 
+<!-- Chat box -->
 <div class="container my-auto">
     <div class="row">
         <div class="col-sm-3" id="online">
@@ -38,21 +38,18 @@
         </div>
         <div class="col-sm-9" id="chat">
             <div id="tab">
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills" id="tabList">
                     <li>
                         <button type="button" id="add" data-toggle="modal" data-target="#chooseUser">+</button>
                     </li>
                     <li class="nav-item">
-                        <a id="lobby" class="nav-link active">Lobby</a>
-                    </li>
-                    <li class="nav-item">
-                        <a id="test" class="nav-link">Test</a>
+                        <a id="Lobby" class="nav-link active">Lobby</a>
                     </li>
                 </ul>
             </div>
 
             <div id="display">
-                <div class="tab-content" id="lobbyContent">
+                <div class="tab-content" id="LobbyContent">
                 </div>
                 <div class="tab-content" id="testContent">
                 </div>
@@ -78,17 +75,32 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Select members</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                ...
+            <div class="modal-body" id="chooseList">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="title" class="form-control" id="roomTitle" placeholder="Enter title">
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkBilly">
+                    <label class="form-check-label" for="checkBilly">
+                        Billy
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkEric">
+                    <label class="form-check-label" for="checkEric">
+                        Eric
+                    </label>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="chooseSubmit">Start chatting</button>
             </div>
         </div>
     </div>

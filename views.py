@@ -9,6 +9,7 @@ chat_id = 0
 users_online = []
 users_message = {}
 users_addition = {}
+chat_groups = {}
 
 
 @app.route("/")
@@ -35,7 +36,7 @@ def login():
 
 @app.route("/receiver", methods=["POST"])
 def receive():
-    new_message = request.form.to_dict()    # {'name': 'xxx', 'message': 'xxx'}
+    new_message = request.form.to_dict()    # {'name': 'xxx', 'message': 'xxx', 'room': 'xxx'}
     user = new_message["name"]
     new_message["time"] = timef()
     for u in users_message.keys():
@@ -69,3 +70,15 @@ def leave():
         users_addition[u]["quit"].append(user)
     print(users_addition)
     return "Bye!"
+
+
+@app.route("/start", methods=["POST"])
+def start():
+    form = request.form.to_dict()
+    title = form["title"]
+    members = form["members"].strip().split(",")
+    for u in members:
+        users_addition[u]["new"] = users_addition[u].get("new", [])
+        users_addition[u]["new"].append({"title": title, "members": members})
+    chat_groups[title] = members
+    return "1"
