@@ -101,6 +101,10 @@ body {
     cursor: pointer;
 }
 
+#tab .dropdown-item:hover {
+    cursor: pointer;
+}
+
 #display {
     padding: 1rem;
     height: 33rem;

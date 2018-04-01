@@ -19,7 +19,7 @@ def index():
 
 @app.route("/login", methods=["POST"])
 def login():
-    data_in = request.form.to_dict()    # {'name': 'xxx'}
+    data_in = request.form.to_dict()  # {'name': 'xxx'}
     user = data_in["name"]
     # TODO: The server should check if the username is available.
     users_online.append(user)
@@ -36,10 +36,10 @@ def login():
 
 @app.route("/receiver", methods=["POST"])
 def receive():
-    new_message = request.form.to_dict()    # {'name': 'xxx', 'message': 'xxx', 'room': 'xxx'}
-    user = new_message["name"]
+    new_message = request.form.to_dict()  # {'name': 'xxx', 'message': 'xxx', 'room': 'xxx'}
     new_message["time"] = timef()
-    for u in users_message.keys():
+    group_name = new_message["room"]
+    for u in chat_groups[group_name]:
         users_message[u].append(new_message)
     return "Success"
 
@@ -61,15 +61,27 @@ def send():
 
 @app.route("/quit", methods=["POST"])
 def leave():
-    user = request.form.to_dict()["name"]
-    users_online.remove(user)
-    del users_message[user]
-    del users_addition[user]
-    for u in users_addition.keys():
-        users_addition[u]["quit"] = users_addition[u].get("quit", [])
-        users_addition[u]["quit"].append(user)
-    print(users_addition)
-    return "Bye!"
+    data = request.form.to_dict()
+    user = data["name"]
+    group_name = data.get("group", None)
+
+    if group_name is None:
+        users_online.remove(user)
+        del users_message[user]
+        del users_addition[user]
+        for u in users_addition.keys():
+            users_addition[u]["quit"] = users_addition[u].get("quit", [])
+            users_addition[u]["quit"].append(user)
+        print(users_addition)
+        return "Bye!"
+    else:
+        chat_groups[group_name].remove(user)
+        if len(chat_groups[group_name]) == 0:
+            del chat_groups[group_name]
+        for u in chat_groups[group_name]:
+            users_addition[u]["quitGroup"] = users_addition[u].get("quitGroup", [])
+            users_addition[u]["quitGroup"].append([user, group_name])
+        return "Bye!"
 
 
 @app.route("/start", methods=["POST"])
@@ -91,7 +103,7 @@ def validate():
 
     if type == "roomTitle":
         room_title = form["value"]
-        if room_title in chat_groups:
+        if room_title == "Lobby" or room_title in chat_groups:
             return "0"
         else:
             return "1"

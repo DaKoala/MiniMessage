@@ -65,19 +65,19 @@ $(document).ready(() => {
     });
 
     $("#roomTitle").on("keyup paste", () => {
-       $.post("/validate", {type: "roomTitle", value: $("#roomTitle").val()}, (data) => {
-          $("#roomTitle").removeClass("is-valid is-invalid");
-          $("#roomTitleFeedback").removeClass("valid-feedback invalid-feedback");
-          if (data === "1") {
-              $("#roomTitle").addClass("is-valid");
-              $("#roomTitleFeedback").addClass("valid-feedback");
-              $("#roomTitleFeedback").text("Sounds a good name!");
-          } else {
-              $("#roomTitle").addClass("is-invalid");
-              $("#roomTitleFeedback").addClass("invalid-feedback");
-              $("#roomTitleFeedback").text("This group has already existed.");
-          }
-       });
+        $.post("/validate", {type: "roomTitle", value: $("#roomTitle").val()}, (data) => {
+            $("#roomTitle").removeClass("is-valid is-invalid");
+            $("#roomTitleFeedback").removeClass("valid-feedback invalid-feedback");
+            if (data === "1") {
+                $("#roomTitle").addClass("is-valid");
+                $("#roomTitleFeedback").addClass("valid-feedback");
+                $("#roomTitleFeedback").text("Sounds a good name!");
+            } else {
+                $("#roomTitle").addClass("is-invalid");
+                $("#roomTitleFeedback").addClass("invalid-feedback");
+                $("#roomTitleFeedback").text("This group has already existed.");
+            }
+        });
     });
 
     $("#chooseSubmit").click(() => {
@@ -112,11 +112,14 @@ function polling() {
             for (let i = 0; i < data.new.length; i++) {
                 let curr = data.new[i];
                 chatRooms[curr.title] = curr.members;
-                let temp = $('<li class="nav-item"></li>');
-                temp.html(`<a id="${curr.title}" class="nav-link">${curr.title}</a>`);
+                let temp = $('<li class="nav-item dropdown"></li>');
+                temp.append($(`<a id="${curr.title}" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${curr.title}</a>`));
+                temp.append($(`<div class="dropdown-menu"><a class="dropdown-item" id="${curr.title}Quit">Quit</a></div>`));
                 $("#tabList").append(temp);
                 boundTab("#" + curr.title);
+                boundQuit(curr.title);
                 temp = $(`<div class="tab-content" id="${curr.title}Content"></div>`);
+                temp.hide();
                 $("#display").append(temp);
             }
         }
@@ -148,11 +151,27 @@ function polling() {
             }
         }
 
+        /* Handle user quit group */
+        if (data.quitGroup !== undefined) {
+            for (let i = 0; i < data.quitGroup.length; i++) {
+                let curr = data.quitGroup[i];
+                let groupName = curr[1];
+                let quitUser = curr[0];
+                remove(chatRooms[groupName], quitUser);
+                if (active === groupName) $("#" + quitUser + "Tag").hide();
+            }
+        }
+
+
         /* Handle user quit */
         if (data.quit !== undefined) {
             console.log("quit");
             for (let i = 0; i < data.quit.length; i++) {
-                $("#" + data.quit[i]).remove();
+                let user = data.quit[i];
+                $("#" + user).remove();
+                for (let key in chatRooms) {
+                    if (chatRooms[key].contains(user)) remove(chatRooms[key], user);
+                }
             }
         }
     });
@@ -182,6 +201,9 @@ function sendMessage() {
 function boundTab(selector) {
     $(selector).click((e) => {
         let thisId = e.target.id;
+        if (active !== thisId && thisId !== "Lobby") {
+            $("#" + thisId).dropdown("toggle");
+        }
         active = thisId;
         $("#tab a").removeClass("active");
         $("#" + thisId).addClass("active");
@@ -197,4 +219,29 @@ function boundTab(selector) {
             }
         }
     });
+}
+
+function boundQuit(name) {
+    $("#" + name + "Quit").click(() => {
+        $.post("/quit", {name: me.name, group: active}, (data) => {
+            $("#" + name + "Content").remove();
+            $("#" + name).parent().remove();
+            delete chatRooms[name];
+            active = "Lobby";
+            $("#tab a").removeClass("active");
+            $("#Lobby").addClass("active");
+            $(".tab-content").hide();
+            $("#LobbyContent").show();
+            $("#onlineUsers").children().show();
+        });
+    });
+}
+
+function remove(array, val) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === val) {
+            array.splice(i, 1);
+            break;
+        }
+    }
 }
