@@ -49,6 +49,10 @@ $(document).ready(() => {
     /* Start new chatting */
     $("#add").click(() => {
         $("#chooseList").children().remove(".form-check");
+        $("#roomTitle").removeClass("is-valid is-invalid");
+        $("#roomTitleFeedback").removeClass("valid-feedback invalid-feedback");
+        $("#roomTitleFeedback").text("");
+        $("#roomTitle").val("");
 
         for (let i = 0; i < onlineList.length; i++) {
             let curr = onlineList[i];
@@ -60,11 +64,27 @@ $(document).ready(() => {
         }
     });
 
+    $("#roomTitle").on("keyup paste", () => {
+       $.post("/validate", {type: "roomTitle", value: $("#roomTitle").val()}, (data) => {
+          $("#roomTitle").removeClass("is-valid is-invalid");
+          $("#roomTitleFeedback").removeClass("valid-feedback invalid-feedback");
+          if (data === "1") {
+              $("#roomTitle").addClass("is-valid");
+              $("#roomTitleFeedback").addClass("valid-feedback");
+              $("#roomTitleFeedback").text("Sounds a good name!");
+          } else {
+              $("#roomTitle").addClass("is-invalid");
+              $("#roomTitleFeedback").addClass("invalid-feedback");
+              $("#roomTitleFeedback").text("This group has already existed.");
+          }
+       });
+    });
+
     $("#chooseSubmit").click(() => {
         let members = [];
         members.push(me.name);
         let title = $("#roomTitle").val();
-        if (title === "") return;
+        if ((title === "") || $("#roomTitle").attr("class").indexOf("invalid") >= 0) return;
         $("#chooseList").find("input").each((i, item) => {
             if (item.checked) members.push(item.id.slice(5));
         });

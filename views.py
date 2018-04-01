@@ -82,3 +82,16 @@ def start():
         users_addition[u]["new"].append({"title": title, "members": members})
     chat_groups[title] = members
     return "1"
+
+
+@app.route("/validate", methods=["POST"])
+def validate():
+    form = request.form.to_dict()
+    type = form["type"]
+
+    if type == "roomTitle":
+        room_title = form["value"]
+        if room_title in chat_groups:
+            return "0"
+        else:
+            return "1"
