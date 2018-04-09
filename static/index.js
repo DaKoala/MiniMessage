@@ -7,11 +7,10 @@ let chatRooms = {};
 
 $(document).ready(() => {
     /* Login */
-    me.name = prompt("Please enter your name:", "");
+    me.name = $("#username").text();
     Object.freeze(me);
     $.post("/login", {name: me.name}, (data) => {
         data = JSON.parse(data);
-        $("#greeting").html($("#greeting").html() + " " + data["name"]);
         let onlineUsers = data["online"];
         for (let i = 0; i < onlineUsers.length; i++) {
             newUser(onlineUsers[i]);

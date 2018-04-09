@@ -1,0 +1,65 @@
+body {
+    background-color: #e2f1fa;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* header */
+#header {
+    background-color: #4472CA;
+    margin-bottom: 2rem;
+}
+
+#header span {
+    color: white;
+}
+
+/* main */
+#main .h1 {
+    font-size: 3.5rem;
+    color: #92B4F4;
+}
+
+#main .h1 span {
+    color: #5E7CE2;
+}
+
+#userBox {
+    margin-top: 0.5rem;
+    background-color: transparent;
+    border-radius: 0.5rem;
+    max-width: 60rem;
+    text-align: left;
+    padding: 1rem;
+}
+
+#userBox input {
+    background: white;
+    min-width: 10rem;
+}
+
+#userBox i {
+    height: 1rem;
+    width: 1rem;
+}
+
+#userBox button {
+    width: 100%;
+    min-width: 4rem;
+}
+
+#userBox .btn-default {
+    background-color: #e6e6e6;
+    color: #4a5056;
+    margin-left: 8%;
+}
+
+#goto {
+    text-decoration: underline;
+}
+
+#goto:hover {
+    color: #2e23a0;
+    cursor: pointer;
+}

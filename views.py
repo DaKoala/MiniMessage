@@ -2,8 +2,8 @@ import json
 from util import *
 from copy import deepcopy
 from __init__ import app
-from flask import render_template
-from flask import request
+from flask import render_template, request, session
+from flask_sqlalchemy import SQLAlchemy
 
 chat_id = 0
 users_online = []
@@ -11,10 +11,44 @@ users_message = {}
 users_addition = {}
 chat_groups = {}
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/mime.db'
+db = SQLAlchemy(app)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    if "username" in session:
+        return render_template("index.html", name=session["username"])
+    return render_template("login.html")
+
+
+@app.route("/register", methods=["POST"])
+def register():
+    form = request.form.to_dict()
+    if form.get("username") is not None:
+        new_user = User(username=form["username"], password=form["password"], email=form["email"])
+        db.session.add(new_user)
+        db.session.commit()
+        session["username"] = form["username"]
+        return "Success"
+    else:
+        user = User.query.filter_by(email=form["email"]).first()
+        if user is None:
+            return "0"
+        elif user.password != form["password"]:
+            return "00"
+        session["username"] = user.username
+        return "1"
 
 
 @app.route("/login", methods=["POST"])
@@ -99,7 +133,7 @@ def start():
 @app.route("/validate", methods=["POST"])
 def validate():
     form = request.form.to_dict()
-    type = form["type"]
+    type = form.get("type", None)
 
     if type == "roomTitle":
         room_title = form["value"]
@@ -107,3 +141,18 @@ def validate():
             return "0"
         else:
             return "1"
+    else:
+        email_addr = form.get("email")
+        user_name = form.get("username")
+        if email_addr is not None:
+            if User.query.filter_by(email=email_addr).first() is not None:
+                return "0"
+            else:
+                return "1"
+        if user_name is not None:
+            if User.query.filter_by(username=user_name).first() is not None:
+                return "0"
+            else:
+                return "1"
+
+app.secret_key = b'h\xaf\xaf\x84\xbe8\xbc\t\x9c\x87\n\xa3\xad^\x9aL\x0c.\xa27\x90\xb4\xdau'

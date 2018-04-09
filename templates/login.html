@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for("static", filename="login.css") }}">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="{{ url_for("static", filename="login.js") }}"></script>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<!-- Nav bar -->
+<nav class="navbar navbar-expand-sm" id="header">
+    <span class="navbar-brand ml-5 my-auto">MiniMessage</span>
+</nav>
+
+<!-- Main interface -->
+<div class="container" id="main">
+    <p class="h1"><span>MI</span>ni <span>ME</span>ssage</p>
+    <div class="row">
+        <div class="col-4 offset-4">
+            <div id="userBox">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
+                                   placeholder="Email address" maxlength="30">
+                            <div id="emailCheck"></div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="regName">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <input class="form-control" id="inputUsername" placeholder="Name to be displayed"
+                                   maxlength="10">
+                            <div id="nameCheck"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password"
+                                   maxlength="16">
+                            <div id="passwordCheck"></div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="regPwd">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-key" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <input type="password" class="form-control" id="confirmPassword"
+                                   placeholder="Confirm password" maxlength="16">
+                            <div id="confirmCheck"></div>
+                        </div>
+                    </div>
+                    <p class="text-right" id="goto">New here? Sign up>>></p>
+                </form>
+                <button type="submit" class="btn btn-primary" id="inputSubmit">Log in</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
