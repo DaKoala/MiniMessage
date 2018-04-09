@@ -99,6 +99,7 @@ def leave():
 
     if group_name is None:
         users_online.remove(user)
+        session.pop("username", None)
         del users_message[user]
         del users_addition[user]
         for u in users_addition.keys():
