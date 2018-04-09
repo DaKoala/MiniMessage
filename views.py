@@ -9,7 +9,7 @@ chat_id = 0
 users_online = []
 users_message = {}
 users_addition = {}
-chat_groups = {}
+chat_groups = {"Lobby": []}
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/mime.db'
 db = SQLAlchemy(app)
@@ -55,8 +55,8 @@ def register():
 def login():
     data_in = request.form.to_dict()  # {'name': 'xxx'}
     user = data_in["name"]
-    # TODO: The server should check if the username is available.
     users_online.append(user)
+    chat_groups["Lobby"].append(user)
     users_message[user] = []
     users_addition[user] = {}
     data_out = {"name": user, "online": [user]}
@@ -84,12 +84,10 @@ def send():
     data_out = dict()
     data_out["message"] = deepcopy(users_message[user])
     users_message[user] = []
-    print(users_addition)
     if len(users_addition[user]) != 0:
         for k, v in users_addition[user].items():
             data_out[k] = v
         users_addition[user] = {}
-    print(data_out)
     return json.dumps(data_out)
 
 
@@ -106,12 +104,12 @@ def leave():
         for u in users_addition.keys():
             users_addition[u]["quit"] = users_addition[u].get("quit", [])
             users_addition[u]["quit"].append(user)
-        print(users_addition)
         return "Bye!"
     else:
         chat_groups[group_name].remove(user)
         if len(chat_groups[group_name]) == 0:
             del chat_groups[group_name]
+            return "Bye"
         for u in chat_groups[group_name]:
             users_addition[u]["quitGroup"] = users_addition[u].get("quitGroup", [])
             users_addition[u]["quitGroup"].append([user, group_name])

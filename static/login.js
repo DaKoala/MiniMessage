@@ -8,6 +8,10 @@ let main = function () {
 
             $("#goto").click(() => {
                 loadPage(login);
+                clearInput($("#inputEmail"));
+                clearInput($("#inputPassword"));
+                clearInput($("#inputUsername"));
+                clearInput($("#confirmPassword"));
                 login = !login;
             });
 
@@ -48,6 +52,10 @@ let main = function () {
             $("#inputUsername").on("keyup paste", () => {
                 if (login) return;
                 let tmp = $("#inputUsername");
+                if (tmp.val().length <= 0) {
+                    checkDisplay(tmp, tmp.next(), "Username is too short", false, 3);
+                    return;
+                }
                 if (!isAlphanum(tmp.val())) {
                     checkDisplay(tmp, tmp.next(), "Username can only contain alphabet and number", false, 3);
                     return;
@@ -127,6 +135,14 @@ let main = function () {
             if (inputDOM.val().length <= 0) {
                 checkDisplay(inputDOM, inputDOM.next(), "This field cannot be empty", false, i);
             }
+        }
+
+        function clearInput(inputDOM) {
+            inputDOM.removeClass("is-valid is-invalid");
+            inputDOM.val("");
+            inputDOM.next().removeClass("valid-feedback invalid-feedback");
+            inputDOM.next().text("");
+            regValid = [false, false, false, false]
         }
 
         function allValid(array) {

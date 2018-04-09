@@ -103,7 +103,6 @@ $(document).ajaxError(() => {
 
 function polling() {
     $.post("/sender", {name: me.name}, (data) => {
-        console.log(data);
         data = JSON.parse(data);
 
         /* Handle new groups */
@@ -164,7 +163,6 @@ function polling() {
 
         /* Handle user quit */
         if (data.quit !== undefined) {
-            console.log("quit");
             for (let i = 0; i < data.quit.length; i++) {
                 let user = data.quit[i];
                 $("#" + user).remove();
