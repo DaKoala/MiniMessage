@@ -28,6 +28,7 @@ body {
     padding: 0;
     height: 45rem;
     border: 0.25rem solid #5E7CE2;
+    overflow: auto;
 }
 
 #online #title {
@@ -64,6 +65,8 @@ body {
 #tab {
     border-bottom: 0.25rem solid #5E7CE2;
     padding: 0.1rem 0.2rem;
+    height: 3.2rem;
+    overflow: auto;
 }
 
 #tab .nav {
