@@ -65,8 +65,10 @@ body {
 #tab {
     border-bottom: 0.25rem solid #5E7CE2;
     padding: 0.1rem 0.2rem;
-    height: 3.2rem;
-    overflow: auto;
+}
+
+#tabList {
+    white-space: nowrap;
 }
 
 #tab .nav {
@@ -88,9 +90,13 @@ body {
     cursor: pointer;
 }
 
+#tab .nav-item {
+    display: inline;
+}
+
 #tab .nav-link.active{
     color: white;
-    background-color: #92B4F4;;
+    background-color: #92B4F4;
 }
 
 #tab .nav-link {

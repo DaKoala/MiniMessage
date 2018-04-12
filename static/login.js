@@ -68,35 +68,50 @@ let main = function () {
             });
 
             $("#inputSubmit").click(() => {
-                if (!login) {
-                    checkEmpty($("#inputEmail"), 0);
-                    checkEmpty($("#inputPassword"), 1);
-                    checkEmpty($("#confirmPassword"), 2);
-                    checkEmpty($("#inputUsername"), 3);
-                    if (allValid(regValid)) {
-                        $.post("/register", {email: $("#inputEmail").val(),
-                            username: $("#inputUsername").val(),
-                            password: $("#inputPassword").val()}, () => {
-                            window.location.reload();
-                        });
-                    }
-                } else {
-                    $("#inputEmail").removeClass("is-invalid").next().removeClass("invalid-feedback").text("");
-                    $.post("/register", {email: $("#inputEmail").val(),
-                        password: $("#inputPassword").val()}, (data) => {
-                        if (data === "0") {
-                            checkDisplay($("#inputEmail"), $("#inputEmail").next(), "This account does not exist", false, 0);
-                        }
-                        else if (data === "00") {
-                            checkDisplay($("#inputPassword"), $("#inputPassword").next(), "Incorrect password", false, 1);
-                        }
-                        else {
-                            window.location.reload();
-                        }
-                    })
-                }
+                loginSubmit();
             });
         });
+
+        $(document).keydown((event) => {
+            if (event.which === 13) {
+                event.preventDefault();
+                loginSubmit();
+            }
+        });
+
+        function loginSubmit() {
+            if (!login) {
+                checkEmpty($("#inputEmail"), 0);
+                checkEmpty($("#inputPassword"), 1);
+                checkEmpty($("#confirmPassword"), 2);
+                checkEmpty($("#inputUsername"), 3);
+                if (allValid(regValid)) {
+                    $.post("/register", {
+                        email: $("#inputEmail").val(),
+                        username: $("#inputUsername").val(),
+                        password: $("#inputPassword").val()
+                    }, () => {
+                        window.location.reload();
+                    });
+                }
+            } else {
+                $("#inputEmail").removeClass("is-invalid").next().removeClass("invalid-feedback").text("");
+                $.post("/register", {
+                    email: $("#inputEmail").val(),
+                    password: $("#inputPassword").val()
+                }, (data) => {
+                    if (data === "0") {
+                        checkDisplay($("#inputEmail"), $("#inputEmail").next(), "This account does not exist", false, 0);
+                    }
+                    else if (data === "00") {
+                        checkDisplay($("#inputPassword"), $("#inputPassword").next(), "Incorrect password", false, 1);
+                    }
+                    else {
+                        window.location.reload();
+                    }
+                })
+            }
+        }
 
         function loadPage(state) {
             $("#regName").toggle();
