@@ -1,4 +1,8 @@
 # MiniMessage
+
+![Python](https://img.shields.io/badge/Python-3.6.3-blue.svg)
+![Flask](https://img.shields.io/badge/Flask-0.12.2-blue.svg)
+
 A web chat room application. Developed with Flask framework, Sqlite, jQuery 3 and Bootstrap 4.
 
 一个在线网页聊天室，使用 Flask 框架、jQuery 3 和 Bootstrap 4 开发。
