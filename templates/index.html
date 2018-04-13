@@ -58,7 +58,7 @@
             <div id="inputArea">
                 <div class="row">
                     <div class="col-sm-10" style="padding-right:0;">
-                        <textarea class="" id="msgInput"></textarea>
+                        <textarea class="" id="msgInput" maxlength="80"></textarea>
                     </div>
                     <div class="col-sm-2" style="padding:0; padding-top: 1.2rem;">
                         <button class="align-middle" id="msgSubmit">Send</button>
@@ -82,21 +82,9 @@
             </div>
             <div class="modal-body" id="chooseList">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Group name</label>
-                    <input type="title" class="form-control" id="roomTitle" placeholder="Enter title">
+                    <label for="roomTitle">Group name</label>
+                    <input type="title" class="form-control" id="roomTitle" placeholder="Enter title" maxlength="20">
                     <div id="roomTitleFeedback"></div>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkBilly">
-                    <label class="form-check-label" for="checkBilly">
-                        Billy
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="checkEric">
-                    <label class="form-check-label" for="checkEric">
-                        Eric
-                    </label>
                 </div>
             </div>
             <div class="modal-footer">
