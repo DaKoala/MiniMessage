@@ -18,7 +18,7 @@ Visit [mime.billyzou.com](http://mime.billyzou.com/) to get started!
 ### Download 下载
 
 ```bash
-  git clone https://github.com/DaKoala/MiniMessage.git
+git clone https://github.com/DaKoala/MiniMessage.git
 ```
 
 ### Dependencies 依赖组件
@@ -29,18 +29,28 @@ Visit [mime.billyzou.com](http://mime.billyzou.com/) to get started!
 
 - SQLite
 
+### Database creation 数据库创建
+
+Run Python console first 请先运行Python console
+
+```python
+>>> from views import db
+
+>>> db.create_all()
+```
+
 ### Run 运行
 
 Run on localhost to test 本地调试
 
 ```bash
-  python3 run.py 0
+python3 run.py 0
 ```
 
 Run on server 服务器运行
 
 ```bash
-  python3 run.py 1
+python3 run.py 1
 ```
 
 ## User Guide 用户指引
